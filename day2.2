@@ -1,0 +1,29 @@
+class CustomRange:
+    def __init__(self, stop, start=0, step=1):
+        self.stop = stop
+        self.start = start
+        self.step = step
+        self.initial = start
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.start >= self.stop and self.step > 0:
+            raise StopIteration
+        elif self.start <= self.stop and self.step < 0:
+            raise StopIteration
+        current = self.start
+        self.start += self.step
+        return current
+
+    def reset(self):
+        self.start = self.initial
+
+
+def my_range(start, stop):
+    current = start
+    end = stop
+    while current < stop:
+        yield current
+        current += 1
