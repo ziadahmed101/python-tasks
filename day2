@@ -1,0 +1,85 @@
+class vehicle_rental:
+    rent_multi = 1
+    total_vehicles = 0
+
+    def __init__(self, vehicle_id, brand, model, rental_price):
+        self.vehicle_id = vehicle_id
+        self.brand = brand
+        self.model = model
+        self.rental_price = rental_price
+        self.is_rented = False
+        self.total_vehicles += 1
+
+    @property
+    def rent(self):
+        self.is_rented = False
+
+    @property
+    def return_vehicle(self):
+        self.is_rented = True
+
+    def calculate_rental_cost(self, days):
+        if not isinstance(days, (int, float)):
+            print("please provide a number")
+            return
+
+        if days < 0:
+            print("days cant be 0/negative value u didnt invent time travel")
+            return
+        days = math.ceil(days)
+        total_price = self.rental_price * days * self.rent_multi
+        print(f"you rented a {self.__class__.__name__} for {days} for ${total_price}")
+        return total_price
+
+    def get_details(self):
+        print(f"{self.brand} {self.model} costs ${self.rental_price} per day")
+        return f"{self.brand} {self.model} costs ${self.rental_price} per day {'rented' if self.is_rented else 'available'}"
+
+
+class Car(vehicle_rental):
+    rent_multi = 1
+
+    def __init__(self, vehicle_id, brand, model, rental_price, num_doors):
+        super().__init__(vehicle_id, brand, model, rental_price)
+        self.num_doors = num_doors
+
+    def get_details(self):
+        print(f"{self.brand} {self.model} costs ${self.rental_price} per day")
+        return f"{self.brand} {self.model} costs ${self.rental_price} per day {'rented' if self.is_rented else 'available'} number of doors= {self.num_doors}"
+
+
+class Motorcycle(vehicle_rental):
+    rent_multi = 1
+
+    def __init__(self, vehicle_id, brand, model, rental_price, engine_cc):
+        super().__init__(vehicle_id, brand, model, rental_price)
+        self.engine_cc = engine_cc
+
+    def get_details(self):
+        print(f"{self.brand} {self.model} costs ${self.rental_price} per day")
+        return f"{self.brand} {self.model} costs ${self.rental_price} per day {'rented' if self.is_rented else 'available'} number of engine cc = {self.engine_cc}"
+
+
+class Truck(vehicle_rental):
+    rent_multi = 1
+
+    def __init__(self, vehicle_id, brand, model, rental_price, cargo_capacity_tons):
+        super().__init__(vehicle_id, brand, model, rental_price)
+        self.cargo_capacity_tons = cargo_capacity_tons
+
+    def get_details(self):
+        print(f"{self.brand} {self.model} costs ${self.rental_price} per day")
+        return f"{self.brand} {self.model} costs ${self.rental_price} per day {'rented' if self.is_rented else 'available'} capacity = {self.cargo_capacity_tons}"
+
+
+# car = Car("V001", "Toyota", "Camry", 50, 4)
+# motorcycle = Motorcycle("V002", "Harley", "Street 750", 40, 750)
+# truck = Truck("V003", "Ford", "F-150", 80, 2.5)
+
+# print(car.get_details())
+# print(motorcycle.get_details())
+# print(truck.get_details())
+
+# car.calculate_rental_cost(3)
+# motorcycle.calculate_rental_cost(2)
+# truck.calculate_rental_cost(5)
